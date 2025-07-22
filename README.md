@@ -11,35 +11,51 @@ It demonstrates key steps in **moving beyond a notebook** into an **automated, r
 ---
 
 ## 📦 Project structure
-
+<pre>
+├── data/
+│   ├── train.csv
+│   └── test.csv
+├── notebooks/
+│   ├── 01-eda.ipynb
+│   ├── 02-modeling.ipynb
+│   └── 03-deploy.ipynb
+├── inference/
+│   ├── inference.py
+│   ├── preprocess.py
+│   └── endpoint_name.txt
+├── model/
+│   └── preprocessor.joblib
+├── deploy/
+│   └── test_inference.py
+└── README.md
+  </pre>
 ---
 
 ## 🚀 Workflow summary
 ✅ **Steps performed in this project:**
 
 1️⃣ **Data analysis** (`01-eda.ipynb`):
-- Investigated 81 features.
-- Visualized missing values and relationships with the target (`SalePrice`).
+- Explored 81 features.
+- Visualized missingness and relationships with `SalePrice`.
 
 2️⃣ **Feature engineering & model training** (`02-modeling.ipynb`):
-- Created a robust `scikit-learn.Pipeline` handling:
+- Created a robust `scikit-learn.Pipeline` for:
   - Column selection
-  - Imputation (MICE/other strategies)
+  - Imputation
   - One-hot encoding
   - Scaling
-- Performed hyperparameter tuning on `XGBoostRegressor` using `GridSearchCV`.
-- Achieved:
-  - **Train R² ≈ 93%**
-  - **Test R² ≈ 83%**
 
-3️⃣ **Model packaging**:
-- Saved pipeline as `xgb_pipeline.joblib`.
-- Compressed and uploaded to S3 for deployment.
+3️⃣ **Model packaging & deployment**:
+- Saved the preprocessing pipeline (`preprocessor.joblib`).
+- Saved the trained XGBoost model (`model.joblib`).
+- Uploaded to S3.
+- Deployed as a **SageMaker real-time inference endpoint** for on-demand predictions.
 
-4️⃣ **Production deployment** (`03-deploy.ipynb`):
-- Registered model as a **SageMaker model object**.
-- Launched a **SageMaker Batch Transform job** for scalable, auditable predictions.
-- Post-processed predictions to produce a `result.csv` file with:
+4️⃣ **Production prediction script** (`deploy/test_inference.py`):
+- Loads `test.csv`
+- Applies **identical preprocessing**
+- Sends the data to the live SageMaker endpoint
+- Writes predictions to `result.csv` with columns:
   - `Id`
   - `SalePrice`
 
@@ -48,9 +64,9 @@ It demonstrates key steps in **moving beyond a notebook** into an **automated, r
 ## ☁️ Tech stack:
 - **AWS SageMaker**
   - Studio Notebooks
-  - Model registration
-  - Batch Transform
-- **S3** for storage of artifacts, data, and results.
+  - Model packaging
+  - Real-time inference endpoints
+- **S3** for data and artifact storage
 - **Scikit-learn pipelines**
 - **XGBoost**
 - **Python 3.12 environment**
@@ -60,7 +76,7 @@ It demonstrates key steps in **moving beyond a notebook** into an **automated, r
 ## 🔧 How to reproduce:
 ### Prerequisites:
 - AWS account with SageMaker and S3 access
-- (Optional) Quota increase for `ml.m5.large` for Transform Jobs
+- Python environment with `boto3`, `sagemaker`, `scikit-learn`, `pandas`, `joblib`, etc.
 
 ### Steps:
 1️⃣ Upload your datasets:
