@@ -11,7 +11,7 @@ It demonstrates key steps in **moving beyond a notebook** into an **automated, r
 ---
 
 ## 📦 Project structure
-
+<pre>
 ├── data/
 │   ├── train.csv
 │   └── test.csv
@@ -28,6 +28,7 @@ It demonstrates key steps in **moving beyond a notebook** into an **automated, r
 ├── deploy/
 │   └── test_inference.py
 └── README.md
+  </pre>
 ---
 
 ## 🚀 Workflow summary
