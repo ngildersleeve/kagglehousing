@@ -9,7 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import FunctionTransformer
 
 categorical_cols = ['BsmtQual']
-numerical_cols = ['OverallQual', 'GarageCars', 'GrLivArea']
+numerical_cols = ['OverallQual', 'GarageCars', 'GrLivArea', 'BedroomAbvGr']
 all_features = numerical_cols + categorical_cols
 
 def select_features(X):
